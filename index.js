@@ -5,8 +5,8 @@ const {getVoiceCOnnection} = require("@discordjs/voice")
 const client = new Client(ClientSettingObject());
 
 client.deploySlash = {
-    enabled: false,
-    guild: false,
+    enabled: true,
+    guild: "965670982507438110",
 }
 
 client.config = require("./config/config.json");
@@ -15,7 +15,7 @@ client.commands = new Collection();
 client.slashCommands = new Collection();
 Client.queues = new Collection();
 
-require('./util/handler')(client);
+require('./util/handler.js')(client);
 
 client.login(client.config.BOT_TOKEN);
 
