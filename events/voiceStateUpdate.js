@@ -1,3 +1,4 @@
+//TODO SI MUEVEN AL BOT PUEDE QUEDARSE SOLO SIN NADIE Y NO SE CIERRA CONEXION
 
 const { Permissions } = require("discord.js");
 const {getVoiceConnection} = require("@discordjs/voice");
@@ -38,13 +39,14 @@ module.exports = async (client, oldState, newState) => {
     //si alguien se sale de un canal o se cambia de canal 
     if(!n.channelId && o.channelId || n.channelId && o.channelId){
         //obtenemos la conexion de voz 
-        const connection= getVoiceConnection(o.guild.id);
-        const connection1= getVoiceConnection(n.guild.id);
+        setTimeout(() => {
+        const connection= getVoiceConnection(n.guild.id);
         //si hay alguien mas a parte de nosotros no hacemos nada
-        console.log(connection);
         if(o.channel.members.filter(m => !m.user.bot && !m.voice.selfDeaf && !m.voice.serverDeaf).size >=1) return;
-        console.log("paso");
-        if((connection || connection1)&& connection.joinCongfig.channelId == o.channelId) connection.destroy();
+        //si no cierro conexion
+        if(connection && connection.joinConfig.channelId == o.channelId) connection.destroy();
+        }, 5_000)
+
         return;
 
     }

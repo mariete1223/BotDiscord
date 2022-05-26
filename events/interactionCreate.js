@@ -22,7 +22,7 @@ module.exports = async (client, interaction) => {
             //si no es subcomando simplemente guardaremos su valor
             else if(option.value) args.push(option.value)
         }
-
+        //indicamos quien a desencadenado la accion
         interaction.member = interaction.guild.members.cache.get(interaction.user.id) || await interaction.guild.members.fetch(interaction.user.id).catch(() => null);
         try{
             cmd.run(client,interaction,args, "/");

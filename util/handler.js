@@ -44,9 +44,9 @@ module.exports = async client => {
         //comprobamos si estan permitidos los comandos /
         if(client.deploySlash.enabled){
             //comprobamos si estamos en algun server
-            if(client.deploySlash.guild){
+            if(client.deploySlash.guilds){
                 //si lo estamos establecemos los comandos de ese server a los slash commands es instantaneo
-                client.guilds.cache.get(client.deploySlash.guild).commands.set(slashCommands);
+                client.deploySlash.guilds.forEach((e) =>  client.guilds.cache.get(e).commands.set(slashCommands) );
             }else {
                 //sino establecemos los comandos globales de la aplicacion a slash command, puede tardar hasta 1 hora
                 client.application.commands.set(slashCommands);

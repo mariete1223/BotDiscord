@@ -6,16 +6,17 @@ const client = new Client(ClientSettingObject());
 
 client.deploySlash = {
     enabled: true,
-    guild: "965670982507438110",
+    guilds: ["965670982507438110"],
 }
 
 client.config = require("./config/config.json");
 
 client.commands = new Collection();
 client.slashCommands = new Collection();
-Client.queues = new Collection();
+client.queues = new Collection();
 
 require('./util/handler.js')(client);
+require('./util/musicUtils.js')(client);
 
 client.login(client.config.BOT_TOKEN);
 
