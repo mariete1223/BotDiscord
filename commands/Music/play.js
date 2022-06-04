@@ -45,19 +45,24 @@
                  queue= undefined;
              }
              if(!isList && isSong && isYT){
+                 console.log("aqui")
                  song= await YouTube.getVideo(track);
              }else if (isList && !isSong && isYT){
+                console.log("a")
                  playlist = await YouTube.getPlaylist(track).then(playlist => playlist.fetch());
              }
              else if (isYT && isSong && isList){
+                console.log("b")
                  song= await YouTube.getVideo(track);
                  playlist = await YouTube.getPlaylist(track).then(playlist => playlist.fetch());
              } else {
+                console.log("c")
                  song = await YouTube.searchOne(track);
              }
              if(!song && !playlist) return m.edit({content: `❌ **Failed looking for ${track}!**`}).catch(() => null);
              if(!playlist){
                  if(!queue || queue.tracks.length ==0){
+                     console.log("entro");
                      const bitrate = Math.floor(message.member.voice.channel.bitrate /1000);//MB
                      const newQueue = client.createQueue(song, message.author, message.channelId, bitrate);
                      client.queues.set(message.guild.id, newQueue);
@@ -69,6 +74,7 @@
              } else {
                 song = song ? song : playlist.videos[0];
                  if(!queue || queue.tracks.length ==0){
+                     console.log("entrp")
                      const bitrate = Math.floor(message.member.voice.channel.bitrate /1000);//MB
                      const newQueue = client.createQueue(song, message.author, message.channelId, bitrate);
                      playlist.videos.slice(1).forEach(song => newQueue.tracks.push(client.createSong(song,message.author)));

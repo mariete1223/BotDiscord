@@ -100,7 +100,7 @@ module.exports = client => {
     client.getResource = (queue, songInfoId, seekTime = 0) => {
         let Qargs = "";
         let effects = queue?.effects || {
-            bassboost: 4,
+            //bassboost: 4,
             speed: 1
         };
         //filters from ffmpeg https://ffmpeg.org/ffmpeg-filters.html
@@ -187,13 +187,14 @@ module.exports = client => {
                             client.sendQueueUpdate(channel.guild.id);
                         }
                     });
-                    
+
                     player.on("idle", () => {
                         const queue = client.queues.get(channel.guild.id);
                         console.log("QueueShift - Idle/Skip");
                         //hanlde queue cause no resource available
                         handleQueue(queue);
                     });
+
                     player.on("error", error => {
                         console.log(error);
                         const queue = client.queues.get(channel.guild.id);
@@ -201,6 +202,8 @@ module.exports = client => {
                         //handle queue cause error occured
                         handleQueue(queue);
                     });
+
+                    
 
                     async function handleQueue(queue){
                        
@@ -277,7 +280,7 @@ module.exports = client => {
         }).catch(() => null);
         return true;
     }
-
+ 
     client.createSong = (song, requester) => {
         return {...song, requester};
     }
