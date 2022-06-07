@@ -300,7 +300,7 @@ module.exports = client => {
             paused: false,
             skipped: false,
             effects: {
-                bassboost: 6,
+                //bassboost: 6,
                 subboost: false,
                 mcompand: false,
                 haas: false,

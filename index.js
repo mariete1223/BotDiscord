@@ -16,7 +16,9 @@ client.slashCommands = new Collection();
 client.queues = new Collection();
 
 require('./util/handler.js')(client);
+require('./util/lolUtils.js')(client);
 require('./util/musicUtils.js')(client);
+require('./data/lolChamps.js')(client);
 
 client.login(client.config.BOT_TOKEN);
 
