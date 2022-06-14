@@ -12,6 +12,7 @@ module.exports = async client => {
             let pull = require(`${process.cwd()}/commands/${directory}/${file}`);
             //añades los .js a la coleccion de comandos existentes
             client.commands.set(pull.name, pull);
+            
         })
     })
     //https://stackoverflow.com/questions/27654149/function-prototype-bind-with-null-as-argument

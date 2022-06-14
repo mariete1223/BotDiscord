@@ -16,20 +16,24 @@ module.exports = client => {
         const mins = parseInt((ms/60000)%60);
         const hours = parseInt((ms/3600000)%24);
         
-        if(hrs> 0) return `${hours}:${mins}:${secs}`;
-        return `${mins}:${secs}`;
+        if(hours> 0) return `${m2(hours)}:${m2(mins)}:${m2(secs)}`;
+        return `${m2(mins)}:${m2(secs)}`;
     }
 
     // create a Bar showing the current position on the video we are
     client.createBar = (duration, position) => {
         try {
-        const full = "🔳";
-        const empty = "⬜";
-        const size = 20;
-        const percent = duration == 0 ? null : Math.floor(duration/position*100);
-        const fullBars = Math.floor(percent/100*size);
+        const full = ":green_square: ";
+        const empty = ":red_square: ";
+        const size = 18;
+        console.log(duration+"   "+position)
+        const percent = duration == 0 ? null : Math.floor(position/duration*100);
+        let fullBars = Math.floor((percent/100)*size);
+        if(fullBars==0){
+            fullBars++;
+        }
         const emptyBars = size-fullBars;
-        
+        console.log(fullBars+"   "+percent+"  "+emptyBars)
         return `**${full.repeat(fullBars)}${empty.repeat(emptyBars)}**`
         } catch (e) {
             console.error(e);
@@ -148,7 +152,7 @@ module.exports = client => {
     const resource = createAudioResource(dcYtdl(client.getYTLink(songInfoId),requestOpts),{inlineVolume: true});
     const volume = queue && queue.volume && queue.volume <= 150 && queue.volume >= 1 ? queue.volume/100 : 0.80;
     resource.volume.setVolume(volume);
-    resource.playbackDuration = seekTime;
+    //resource.playbackDuration = seekTime;
     return resource;
     }
 
@@ -175,6 +179,7 @@ module.exports = client => {
                     const resource= client.getResource(curQueue, songInfo.id);
                     //we play the song
                     player.play(resource);
+                    
                     //https://github.com/discordjs/voice/blob/a6dad47/src/audio/AudioPlayer.ts#L20
                     player.on("playing", player => {
                         //get our queue
@@ -266,11 +271,12 @@ module.exports = client => {
         const textChannel = client.channels.cache.get(queue.textChannel) || await client.channel.fetch(queue.textChannel).cactch(() => null);
         if(!textChannel) return;
         const song = queue.tracks[0];
+        
         const songEmbed = new  Discord.MessageEmbed().setColor("FUCHSIA")
                                                      .setTitle(`${song.title}`)
                                                      .setURL(`${client.getYTLink(song.id)}`)
                                                      .addField(`**Duration:**`, `> \`${song.durationFormatted}\``, true)
-                                                     .addField(`**Requester:**`, ` > ${song.requester} \`${song.requester.tag}\``,true);
+                                                     .addField(`**Requester:**`, `> ${song.requester} \`${song.requester.tag}\``,true);
         if(song?.thumbnail?.url) songEmbed.setImage(`${song?.thumbnail?.url}`);
 
         await textChannel.send({
