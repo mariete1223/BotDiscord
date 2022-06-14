@@ -100,7 +100,7 @@
                  return m.edit({content: `:thumbsup: **Queued at \`${client.queuePos(queue.tracks.length-1) - (playlist.videos.atlength -1)}\` - \` _${song.title}_** - \`${song.durationFormatted}\``}).catch(()=> null);
              }
          }catch (e){
-             message.reply({content: `**❌ Couldn't play that in your VC due to:  \`\`\` ${String(e?.message || error).substring(0,1900)} \`\`\` `}).catch(()=> null);
+             message.reply({content: `**❌ Couldn't play that in your VC due to:  \`\`\` ${String(e?.message || e).substring(0,1900)} \`\`\` `}).catch(()=> null);
          }
 
      }

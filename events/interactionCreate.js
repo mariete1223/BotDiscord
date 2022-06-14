@@ -6,11 +6,12 @@ module.exports = async (client, interaction) => {
         if(!cmd) return interaction.reply({content: `❌ This command is not executable anymore!`});
 
         const args = [];
-
+        console.log(interaction.options)
         //recorremos los parametros para el command
-        for(let option of interaction.options?.data){
+        for(let option of interaction.options.data){
             
             if(option.type === "SUB_COMMAND"){
+                console.log("entro");
                 //si es subcomando guardamos el nombre
                 if(option.name) args.push(option.name)
                 //para cada parametro del subcomando guardamos el valor de sus parametros
@@ -22,6 +23,7 @@ module.exports = async (client, interaction) => {
             //si no es subcomando simplemente guardaremos su valor
             else if(option.value) args.push(option.value)
         }
+        console.log(args);
         //indicamos quien a desencadenado la accion
         interaction.member = interaction.guild.members.cache.get(interaction.user.id) || await interaction.guild.members.fetch(interaction.user.id).catch(() => null);
         try{

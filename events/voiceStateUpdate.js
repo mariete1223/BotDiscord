@@ -46,7 +46,7 @@ module.exports = async (client, oldState, newState) => {
         //si no cierro conexion
         if(connection && connection.joinConfig.channelId == o.channelId) connection.destroy();
         }, 5_000)
-
+        
         return;
 
     }

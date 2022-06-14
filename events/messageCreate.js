@@ -3,7 +3,7 @@ const {MessageEmbed} = require("discord.js");
 module.exports = async (client, message) =>{
     if(message.author.bot || !message.guild) return;
     const {prefix} = client.config;
-    // si es @Bot o comienza por el prefijo
+    // si es @Bot o comienza por el prefijo, coje el comando aunque prefijo y comando esten separados
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${prefix})\\s*`);
     if(!prefixRegex.test(message.content)) return;
 
@@ -22,6 +22,7 @@ module.exports = async (client, message) =>{
     }
     //buscamos entre los comandos del BOT y sus alias
     const cmd = client.commands.get(cmndName.toLowerCase()) || client.commands.find(c => c.aliases?.includes(cmndName.toLowerCase()));
+   
     if(!cmd) return;
     try{
         cmd.run(client,message,args,prefix);
